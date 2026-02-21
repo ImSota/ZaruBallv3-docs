@@ -7,6 +7,7 @@ import Icons from "unplugin-icons/vite";
 export default defineConfig({
   site: "https://ImSota.github.io",
   base: "/ZaruBallv3-docs",
+  trailingSlash: "always",
   integrations: [
     starlight({
       title: "ZaruBallv3",
