@@ -15,11 +15,16 @@ hero:
 
 import { LinkButton } from "@astrojs/starlight/components";
 
-# ZaruBall v3 DYA Studio 対応手順 2026/2/21現在
+# ZaruBall v3 DYA Studio 対応手順 2026/2/20時点
+
+:::caution[注意]
+現在この設定ではビルドが通りません。 修正後、更新します。
+:::
 
 ZaruBall v3 を DYA Studioに対応させるための手順です。
 本手順では、ZMKのフォーク版である [cormoran](https://github.com/cormoran/zmk) 版を使用し、必要なモジュールを組み込む方法を解説します。
 また、前提として既存のファームウェアがzmk v0.3に対応したものである必要があります。(自力でv0.4にアップデートしていない場合は、v0.3になっています。)
+:::
 
 ## DYA Studioとは？
 
@@ -51,7 +56,7 @@ ZaruBall v3 を DYA Studioに対応させるための手順です。
 
 projects: # ZMK 本体を cormoran フォークに変更 - name: zmk
 remote: cormoran
-revision: v0.3+custom-studio-protocol
+revision: v0.3-branch+custom-studio-protocol+activity
 import: app/west.yml
 
     # 以下の DYA Studio 用モジュールを追加
