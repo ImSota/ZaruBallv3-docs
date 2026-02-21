@@ -39,27 +39,27 @@ import Carousel from "../../components/Carousel.astro";
 
 <CardGrid>
   <CustomCard title="60% Keyboard">
-    <Keycap slot="icon" color="white" font-size="1.5rem" aria-hidden />
+    <Keycap slot="icon" class="theme-icon" font-size="1.5rem" aria-hidden />
     ZaruBallは60%キーボードです。 数字列はやっぱりあったほうがいいよね。
   </CustomCard>
   <CustomCard title="34mm/25mm Trackball">
-    <Trackball slot="icon" color="white" font-size="1.5rem" aria-hidden />
+    <Trackball slot="icon" class="theme-icon" font-size="1.5rem" aria-hidden />
     トラックボールは34mmと25mmの2種類から選べます。高さを抑えることでキー入力中の誤動作を最小限に。
   </CustomCard>
   <CustomCard title="Choose favorite switches">
-    <Keyswitch slot="icon" color="white" font-size="1.5rem" aria-hidden />
+    <Keyswitch slot="icon" class="theme-icon" font-size="1.5rem" aria-hidden />
     MXスイッチとchocスイッチの2種類から選べます。ホットスワップ対応なのではんだ付け不要で交換可能です。
   </CustomCard>
   <CustomCard title="ZMK Firmware">
-    <Firmware slot="icon" color="white" font-size="1.5rem" aria-hidden />
+    <Firmware slot="icon" class="theme-icon" font-size="1.5rem" aria-hidden />
     ZMKの採用により完全無線での使用が可能です。
   </CustomCard>
   <CustomCard title="Customizable Case">
-    <Keyboard slot="icon" color="white" font-size="1.5rem" aria-hidden />
+    <Keyboard slot="icon" class="theme-icon" font-size="1.5rem" aria-hidden />
     3Dプリントによりケースの色を自由に変更可能です。また、モデルを改変して自分好みの形に変えることもできます。
   </CustomCard>
   <CustomCard title="Mack Option">
-    <Tenkey slot="icon" color="white" font-size="1.5rem" aria-hidden />
+    <Tenkey slot="icon" class="theme-icon" font-size="1.5rem" aria-hidden />
     Mackオプションを付けることで、左右キーボードの同時充電と16個のキーの追加が可能です。
   </CustomCard>
 </CardGrid>
@@ -90,12 +90,12 @@ import Charge from "~icons/bi/lightning-charge-fill";
 
 <CardGrid>
   <CustomCard title="充電機能">
-    <Charge slot="icon" color="white" font-size="1.5rem" aria-hidden />
+    <Charge slot="icon" class="theme-icon" font-size="1.5rem" aria-hidden />
     MackをUSB充電器に接続し、左右のキーボードの間に挟むよう配置することにより左右のキーボードを同時に１本のケーブルで充電可能。
     接続はマグネットポゴピンで容易に脱着できます。
   </CustomCard>
   <CustomCard title="マクロパッド">
-    <Keycap slot="icon" color="white" font-size="1.5rem" aria-hidden />
+    <Keycap slot="icon" class="theme-icon" font-size="1.5rem" aria-hidden />
     左手側キーボードと接続することで、16キー搭載のマクロパッドとして機能します。
     テンキーやショートカットキーとして活用できます。
     (単体ではマクロパッドとして機能しません。Mack搭載のUSBコネクタは充電専用です。)
@@ -104,16 +104,16 @@ import Charge from "~icons/bi/lightning-charge-fill";
 
 <br />
 
-<div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
 
-<div style={{ flex: 1 }}>
+<div style={{ flex: "1 1 300px" }}>
   <video controls width="100%" muted loop autoplay playsinline>
     <source src="Mack_explanation.mp4" type="video/mp4" />
     お使いのブラウザは動画タグをサポートしていません。
   </video>
 </div>
 
-<div style={{ flex: 1, textAlign: "center" }}>
+<div style={{ flex: "1 1 300px", textAlign: "center" }}>
   ![Mack versioon](../../assets/Mack_version.png)
   <span style={{ fontSize: "0.9em" }}>
     左: MX互換仕様　右: ロープロファイル仕様
@@ -124,9 +124,9 @@ import Charge from "~icons/bi/lightning-charge-fill";
 
 ### 25mmトラックボールケース
 
-<div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'flex-start' }}>
 
-  <div style={{ flex: '1 1 50%' }}>
+  <div style={{ flex: '1 1 300px' }}>
   ZaruBall標準付属の34mmトラックボースケース以外にも25mmトラックボールが使用できます。
   マグネットでキーボードと固定されており、簡単に取り換えることができます。
   ZaruBallv3より前のものよりケース部の背が低くなり、手のひらに当たりにくい形となりました。
@@ -140,7 +140,7 @@ import Charge from "~icons/bi/lightning-charge-fill";
   />
   </div>
 
-<div style={{ flex: "1 1 50%", minWidth: "200px" }}>
+<div style={{ flex: "1 1 300px" }}>
   ![25mmトラックボール](../../assets/25mmtrackball.jpeg)
 </div>
 
