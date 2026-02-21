@@ -12,6 +12,24 @@ export default defineConfig({
     starlight({
       title: "ZaruBallv3",
       favicon: "/favicon.ico",
+      head: [
+        {
+          tag: "script",
+          attrs: {
+            src: "https://www.googletagmanager.com/gtag/js?id=G-V389NYJ8FP",
+            async: "true",
+          },
+        },
+        {
+          tag: "script",
+          content: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-V389NYJ8FP');
+          `,
+        },
+      ],
       customCss: ["./src/styles/custom.css"],
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/ImSota/" },
