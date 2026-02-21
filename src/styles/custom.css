@@ -1,0 +1,99 @@
+/* Google FontsからZen Maru Gothicを読み込む */
+@import url("https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baumans&family=Plaster&display=swap");
+
+/* タイトル部分に適用 */
+.hero h1 {
+  font-family: "Zen Maru Gothic", system-ui;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* テキストを見やすくするシャドウ */
+}
+
+/* トップページ(サイドバーなし)のタイトルのみPlasterを適用 */
+html:not([data-has-sidebar]) .hero h1 {
+  font-family: "Plaster", "Zen Maru Gothic", system-ui;
+}
+
+/* タグライン */
+.hero .tagline .site-title {
+  font-family: "Zen Maru Gothic", sans-serif;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* テキストを見やすくするシャドウ */
+  color: #eee !important; /* 明るい色に */
+}
+
+/* サイトのロゴ（左上）にも適用したい場合 */
+.site-title {
+  font-family: "Plaster", system-ui;
+}
+
+/* コンテンツ内の見出し（h2）にZen Maru Gothicを適用 */
+/* .sl-markdown-content h2 {
+  font-family: "Zen Maru Gothic", sans-serif;
+} */
+
+/* ---------------------------------------------------------
+   ヒーロー画像を全画面幅にし、テキストをオーバーレイ表示にする
+   --------------------------------------------------------- */
+
+/* ヒーローセクション全体 */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: 8rem !important; /* 上下の余白を広げる */
+  align-items: center;
+  justify-content: center;
+  display: flex !important; /* グリッドを解除して中央配置 */
+  flex-direction: column;
+}
+
+/* ヒーロー画像 (背景として配置) */
+.hero > img {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  z-index: 0;
+  opacity: 0.4; /* 画像を暗くしてテキストの可読性を上げる (0.0=透明, 1.0=不透明) */
+  margin: 0 !important;
+  max-width: none !important;
+  border-radius: 0 !important; /* 角丸解除 */
+  mask-image: linear-gradient(
+    to bottom,
+    black 80%,
+    transparent 100%
+  ); /* 下部を少しフェードアウトさせる（任意） */
+}
+
+/* テキストコンテンツのラッパー */
+.hero > .stack {
+  position: relative;
+  z-index: 1; /* 画像の上に表示 */
+  text-align: center !important;
+  align-items: center !important;
+  width: 100%;
+  max-width: 800px !important; /* コンテンツ幅を制限 */
+}
+
+/* テキストコンテンツ内の要素 */
+.hero .copy {
+  align-items: center !important;
+  gap: 1.5rem !important;
+}
+
+.hero .actions {
+  justify-content: center !important;
+}
+
+/* デスクトップ表示でのスタイル上書き (Starlightのデフォルトグリッド解除) */
+@media (min-width: 50rem) {
+  .hero {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    padding-block: 10rem !important;
+  }
+
+  .hero > img {
+    order: 0 !important;
+    width: 100% !important;
+  }
+}

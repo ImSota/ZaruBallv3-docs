@@ -1,0 +1,280 @@
+---
+// Carousel component for auto-scrolling horizontal gallery
+---
+<div class="carousel-wrapper" data-carousel-wrapper>
+  <!-- Left Navigation Button -->
+  <button class="carousel-nav-btn prev" aria-label="Previous image" data-carousel-prev>
+    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+
+  <div class="carousel-track" data-carousel-track>
+    <slot />
+  </div>
+
+  <!-- Right Navigation Button -->
+  <button class="carousel-nav-btn next" aria-label="Next image" data-carousel-next>
+    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <div class="carousel-indicators" data-carousel-indicators></div>
+</div>
+
+<style>
+  .carousel-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .carousel-track {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem; 
+    width: 100%;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    align-items: center;
+    scrollbar-width: none;
+    padding: 0 7.5%;
+  }
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* MDX wrappers */
+  .carousel-track > :global(p) {
+    display: contents;
+  }
+
+  .carousel-track :global(img) {
+    flex: 0 0 85%;
+    width: 85%;
+    scroll-snap-align: center;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: var(--sl-color-black);
+    margin: 0 !important;
+  }
+
+  /* Navigation Buttons */
+  .carousel-nav-btn {
+    position: absolute;
+    top: calc(50% - 20px); /* Centered vertically, offset by half button height or dots */
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease, background-color 0.2s ease;
+  }
+  
+  .carousel-nav-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .carousel-nav-btn.prev {
+    left: 1rem;
+  }
+
+  .carousel-nav-btn.next {
+    right: 1rem;
+  }
+
+  /* Show buttons only when hovering over the wrapper */
+  .carousel-wrapper:hover .carousel-nav-btn {
+    opacity: 1;
+  }
+
+  /* Indicators (Dots) */
+  .carousel-indicators {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 20px;
+  }
+  
+  :global(.carousel-dot) {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--sl-color-gray-4);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block; 
+  }
+  :global(.carousel-dot:hover) {
+    background-color: var(--sl-color-gray-3);
+  }
+  :global(.carousel-dot.active) {
+    background-color: var(--sl-color-text-accent);
+    transform: scale(1.3);
+  }
+
+  /* Mobile devices: Always show buttons or keep them hidden based on preference. 
+     Since hover doesn't exist, we can show them on touch start or just let them be 
+     slightly visible. Here, we'll keep them hidden and let swipe do the work, 
+     but users can tap if they happen to see them. Let's make them slightly visible on touch. */
+  @media (hover: none) and (pointer: coarse) {
+    .carousel-wrapper[data-touched="true"] .carousel-nav-btn {
+      opacity: 0.7;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initCarousels, 50);
+
+    function initCarousels() {
+      const wrappers = document.querySelectorAll('[data-carousel-wrapper]');
+      wrappers.forEach(wrapper => {
+        const track = wrapper.querySelector('[data-carousel-track]');
+        const indicatorsContainer = wrapper.querySelector('[data-carousel-indicators]');
+        const prevBtn = wrapper.querySelector('[data-carousel-prev]');
+        const nextBtn = wrapper.querySelector('[data-carousel-next]');
+        
+        if (!track || !indicatorsContainer) return;
+
+        const items = Array.from(track.querySelectorAll('img'));
+        const itemCount = items.length;
+        
+        if (itemCount <= 1) {
+          if (prevBtn) prevBtn.style.display = 'none';
+          if (nextBtn) nextBtn.style.display = 'none';
+          return;
+        }
+
+        const dots = [];
+        let currentIndex = 0;
+
+        // Create dots & set up scrolling map
+        for (let i = 0; i < itemCount; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot';
+          dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+          if (i === 0) dot.classList.add('active');
+          
+          dot.addEventListener('click', () => {
+             scrollToIndex(i);
+             resetInterval();
+          });
+          
+          indicatorsContainer.appendChild(dot);
+          dots.push(dot);
+        }
+
+        function scrollToIndex(index) {
+          const trackRect = track.getBoundingClientRect();
+          const itemRect = items[index].getBoundingClientRect();
+          // Calculated center offset
+          const scrollLeft = track.scrollLeft + itemRect.left - trackRect.left - (trackRect.width * 0.075);
+          track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        }
+
+        // Navigation Buttons
+        if (prevBtn) {
+          prevBtn.addEventListener('click', () => {
+            let nextIndex = currentIndex - 1;
+            if (nextIndex < 0) nextIndex = itemCount - 1;
+            scrollToIndex(nextIndex);
+            resetInterval();
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', () => {
+            let nextIndex = currentIndex + 1;
+            if (nextIndex >= itemCount) nextIndex = 0;
+            scrollToIndex(nextIndex);
+            resetInterval();
+          });
+        }
+
+        // Intersection Observer for highlighting dots
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const index = items.indexOf(entry.target);
+              if (index !== -1 && index !== currentIndex) {
+                if (dots[currentIndex]) dots[currentIndex].classList.remove('active');
+                currentIndex = index;
+                if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+              }
+            }
+          });
+        }, {
+          root: track,
+          threshold: 0.6 // Element is 60% visible
+        });
+
+        items.forEach(item => observer.observe(item));
+
+        let intervalId;
+        let isHovered = false;
+
+        const advanceSlide = () => {
+          if (!isHovered && items.length > 0) {
+            let nextIndex = currentIndex + 1;
+            if (nextIndex >= itemCount) {
+              nextIndex = 0; // Loop back to start
+            }
+            scrollToIndex(nextIndex);
+          }
+        };
+
+        const startInterval = () => {
+          intervalId = setInterval(advanceSlide, 4500); // 4.5 seconds per slide
+        };
+
+        const resetInterval = () => {
+          clearInterval(intervalId);
+          startInterval();
+        };
+
+        // Desktop Hover triggers
+        wrapper.addEventListener('mouseenter', () => isHovered = true);
+        wrapper.addEventListener('mouseleave', () => isHovered = false);
+        
+        // Touch devices logic to display buttons and pause
+        let touchTimeout;
+        track.addEventListener('touchstart', () => {
+          isHovered = true;
+          wrapper.setAttribute('data-touched', 'true');
+          clearTimeout(touchTimeout);
+        }, {passive: true});
+        
+        track.addEventListener('touchend', () => {
+          touchTimeout = setTimeout(() => {
+            isHovered = false;
+            wrapper.setAttribute('data-touched', 'false');
+          }, 3000); // Buttons disappear and auto-scroll resumes after 3s of no touch
+        });
+
+        startInterval();
+      });
+    }
+  });
+</script>
