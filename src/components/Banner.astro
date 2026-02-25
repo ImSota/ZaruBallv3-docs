@@ -1,0 +1,78 @@
+---
+const { banner } = Astro.locals.starlightRoute.entry.data;
+---
+
+{banner && <div class="sl-banner" data-pagefind-ignore set:html={banner.content} />}
+
+<style>
+	@layer starlight.core {
+		.sl-banner {
+			--__sl-banner-text: var(--sl-color-banner-text, var(--sl-color-text-invert));
+			padding: var(--sl-nav-pad-y) var(--sl-nav-pad-x);
+			background-color: var(--sl-color-banner-bg, var(--sl-color-bg-accent));
+			color: var(--__sl-banner-text);
+			line-height: var(--sl-line-height-headings);
+			text-align: center;
+			text-wrap: balance;
+			box-shadow: var(--sl-shadow-sm);
+		}
+		.sl-banner :global(a) {
+			color: var(--__sl-banner-text);
+		}
+		/* カウントダウン用の装飾スタイル */
+		.sl-banner :global(.countdown) {
+			font-weight: bold;
+			font-size: 1.1em;
+			background: rgba(0, 0, 0, 0.15);
+			padding: 0.1rem 0.4rem;
+			border-radius: 4px;
+			margin: 0 0.2rem;
+			font-family: inherit;
+		}
+	}
+</style>
+
+<script>
+	class CountdownTimer extends HTMLElement {
+		interval: number | undefined;
+
+		constructor() {
+			super();
+			const targetDateStr = this.dataset.target;
+			if (!targetDateStr) return;
+			
+			const targetDate = new Date(targetDateStr).getTime();
+			
+			const update = () => {
+				const now = new Date().getTime();
+				const distance = targetDate - now;
+
+				if (distance <= 0) {
+					this.innerHTML = "🎉 販売開始しました！";
+					if (this.interval) clearInterval(this.interval);
+					return;
+				}
+
+				const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+				let timeStr = "";
+				if (days > 0) timeStr += `${days}日 `;
+				timeStr += `${hours.toString().padStart(2, '0')}時間${minutes.toString().padStart(2, '0')}分${seconds.toString().padStart(2, '0')}秒`;
+
+				this.innerHTML = timeStr;
+			};
+			
+			update();
+			// @ts-ignore
+			this.interval = setInterval(update, 1000);
+		}
+
+		disconnectedCallback() {
+			if (this.interval) clearInterval(this.interval);
+		}
+	}
+	customElements.define('countdown-timer', CountdownTimer);
+</script>

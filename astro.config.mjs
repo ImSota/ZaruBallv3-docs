@@ -12,6 +12,9 @@ export default defineConfig({
     starlight({
       title: "ZaruBallv3",
       favicon: "/favicon.ico",
+      components: {
+        Banner: "./src/components/Banner.astro",
+      },
       head: [
         {
           tag: "script",
