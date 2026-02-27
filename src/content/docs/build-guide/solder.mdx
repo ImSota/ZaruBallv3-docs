@@ -25,14 +25,24 @@ import { Steps, LinkCard, LinkButton } from "@astrojs/starlight/components";
 
 ダイオードは左右のメイン基板裏面、画像に示したフットプリントに実装します。また、D1と記載された箇所はMack使用時にはんだ付けする別パーツです。ZaruBall単体購入の方は気にせず進めてください。
 
-![diode footprint](./../../../assets/diode_footprint.png)
-
 :::caution[ダイオードの向き]
 
 ダイオードは正しい向きで実装する必要があります。基板のシルクに描かれている三角の先端に描かれた縦線があるほう（上の画像の右側）と、ダイオードに書かれている薄い線がある向きを揃えてください。
 
-![diode direction](./../../../assets/diode_direction.jpeg)
+<div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
 
+<div style={{ flex: 1 }}>
+  ![diode footprint](./../../../assets/diode_footprint.png)
+</div>
+
+<div style={{ flex: 1 }}>
+  ![diode direction](./../../../assets/diode_direction.jpeg)
+</div>
+
+</div>
+はんだ付け後、向きを確認したい時はこの画像を参考にしてください。特に注意すべきは四角く囲った部分です。他のダイオードと向きが反転しています。
+
+![diode direction](./../../../assets/diode_direction_ZaruBall.jpg)
 :::
 
 <Steps>
@@ -46,7 +56,7 @@ import { Steps, LinkCard, LinkButton } from "@astrojs/starlight/components";
 
 </Steps>
 
-この作業を全85個のダイオードで繰り返します。ハンダ漏れに気をつけましょう。
+この作業を全85個のダイオードで繰り返します。ハンダ漏れや向きの間違いに気をつけましょう。
 
 ### 3-2. スイッチソケットの実装
 
