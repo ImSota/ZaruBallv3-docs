@@ -4,7 +4,7 @@ description: Get started building your docs site with Starlight.
 template: splash # Remove or comment out this line to display the site sidebar on this page.
 banner:
   content: |
-    在庫は完売いたしました。次回頒布については X(Twitter) のポストをお待ちください！
+    次回の販売開始まで あと<span class="countdown"><countdown-timer data-target="2026-04-12T12:00:00+09:00"></countdown-timer></span>
 hero:
   tagline: 左右分割60%親指トラックボール付きキーボード
   image:
@@ -23,6 +23,8 @@ hero:
       icon: github
       variant: secondary #primary, secondary, minimal
 ---
+
+    {/* 在庫は完売いたしました。次回頒布については X(Twitter) のポストをお待ちください！ */}
 
 import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
 import CustomCard from "../../components/CustomCard.astro";
@@ -152,19 +154,19 @@ import { Steps } from "@astrojs/starlight/components";
 :::caution[在庫状況]
 
 現在、在庫、予約分共に**売り切れ**です。
-次回の入荷の連絡はX上で行うのでフォローしてお待ちください。
+次回のは4/7 12:00に10台分入荷予定です。X上での告知をお待ちください。
 
 :::
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
 
-| 名称                               | 金額     | 在庫数(2/25 12:30～) | 予約注文残数 |
-| ---------------------------------- | -------- | -------------------- | ------------ |
-| ZaruBallキット(ホワイト)           | 20,000円 | 0                    | 0            |
-| Mackキット(ホワイト)               | 5,000円  | 0                    | 0            |
-| 25mmトラックボールケース(ホワイト) | 1,000円  | 在庫制限なし         | 在庫制限なし |
-| ZaruBallはんだ付けオプション       | 15,000円 | 在庫制限なし         | 在庫制限なし |
-| Mackはんだ付けオプション           | 5,000円  | 在庫制限なし         | 在庫制限なし |
+| 名称                               | 金額     | 在庫数(4/7 12:00～) | 予約注文残数 |
+| ---------------------------------- | -------- | ------------------- | ------------ |
+| ZaruBallキット(ホワイト)           | 20,000円 | 0                   | 0            |
+| Mackキット(ホワイト)               | 5,000円  | 0                   | 0            |
+| 25mmトラックボールケース(ホワイト) | 1,000円  | 在庫制限なし        | 在庫制限なし |
+| ZaruBallはんだ付けオプション       | 15,000円 | 在庫制限なし        | 在庫制限なし |
+| Mackはんだ付けオプション           | 5,000円  | 在庫制限なし        | 在庫制限なし |
 
 </div>
 
@@ -240,7 +242,7 @@ import { Steps } from "@astrojs/starlight/components";
 
 - **はんだ付けが必要**：本キットははんだ付けが必要です。マイコン、ダイオード、ソケット、電源スイッチとコネクタ類は自身ではんだ付けをお願いいたします。
   ※はんだ付けが難しいという方のために発送までお時間が掛かりますが、組み立て代行のオプションも用意しております。希望されるキットと一緒にご購入下さい。
-- **同梱しない部品**：トラックボール、スイッチ、キーキャップは付属しません。ご自身でご購入下さい。
+- **同梱しない部品**：トラックボール、スイッチ、キーキャップ、バッテリー、トラックボールは付属しません。ご自身でご購入下さい。
 - **オプションについて**：25mmトラックボールケースとMackはオプションとなります。別途料金がかかることをご留意ください。
 - **同時給電禁止**：Mack使用時にZaruBall側のUSB端子とMack側のUSB端子への同時給電はおやめください。逆流防止回路を組み込んでいますが、最悪故障の原因となります。
 - **バッテリーの取り扱い**：LiPoバッテリーの取り扱いには十分注意してください。バッテリーを因とする不具合、事故の責任は負いかねます。
